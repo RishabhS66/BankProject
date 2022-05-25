@@ -8,4 +8,4 @@ To run the project, please follow the steps mentioned below -
   c) For example, to use the "Demo.txt" file, shift it in the "target" folder, move inside the "target" folder and run command **java -jar sahajBanking-1.0-SNAPSHOT.jar Demo.txt**. <br>
   d) If the parameter \<filePath\> is not provided, it will launch an interactive version of the program. 
  
- 2. You can directly use the JAR file present in the repository. Refer steps 1.b) and 1.c) for the same.
+ 2. You can directly use the JAR file present in the repository. Refer steps 1.b) - 1.d) for the same.
