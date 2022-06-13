@@ -8,16 +8,8 @@ import static java.lang.Math.min;
 
 public class BankUserInterface {
     public static void main(String[] args) throws FileNotFoundException {
-        System.out.println("WELCOME TO SAHAJ BANKING SYSTEMS");
-        System.out.println("You can perform the following actions - ");
-        System.out.println(
-                "1. CREATE - Takes 1 parameter that is the full name of the holder. Creates a new account and returns the account number\n" +
-                "2. DEPOSIT - Takes 2 parameters as input. First is the account number and the second is the deposit amount. Returns the balance post deposit.\n" +
-                "3. WITHDRAW - Takes 2 parameters as input. First is the account number and the second is the withdrawal amount. Returns the balance post withdrawal.\n" +
-                "4. BALANCE - Takes 1 parameter that is the account number. Returns current balance.\n" +
-                "5. TRANSFER - Takes 3 parameters. First is the source account number, second is the target account number and the last one is the amount to transfer. Returns status as successful or failure.\n" +
-                "6. EXIT - Exits the program.\n"
-        );
+
+        introMsg();
 
         BufferedReader inpReader;
         boolean fromFile = false;
@@ -33,8 +25,6 @@ public class BankUserInterface {
                 System.out.println("File Path given is wrong!");
                 return;
             }
-
-
         }
         else {
             inpReader = new BufferedReader(new InputStreamReader(System.in));
@@ -96,6 +86,19 @@ public class BankUserInterface {
         }
 
         return;
+    }
+
+    private static void introMsg() {
+        System.out.println("WELCOME TO SAHAJ BANKING SYSTEMS");
+        System.out.println("You can perform the following actions - ");
+        System.out.println(
+                "1. CREATE - Takes 1 parameter that is the full name of the holder. Creates a new account and returns the account number\n" +
+                        "2. DEPOSIT - Takes 2 parameters as input. First is the account number and the second is the deposit amount. Returns the balance post deposit.\n" +
+                        "3. WITHDRAW - Takes 2 parameters as input. First is the account number and the second is the withdrawal amount. Returns the balance post withdrawal.\n" +
+                        "4. BALANCE - Takes 1 parameter that is the account number. Returns current balance.\n" +
+                        "5. TRANSFER - Takes 3 parameters. First is the source account number, second is the target account number and the last one is the amount to transfer. Returns status as successful or failure.\n" +
+                        "6. EXIT - Exits the program.\n"
+        );
     }
 
     private static void takeCmdMsg() {

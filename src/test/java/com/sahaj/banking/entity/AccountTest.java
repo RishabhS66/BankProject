@@ -1,12 +1,30 @@
 package com.sahaj.banking.entity;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountTest {
 
     private Account testAcc = new Account("Test", 10000);
+
+    private static ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private static PrintStream originalOut = System.out;
+
+    @BeforeAll
+    public static void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+    }
+
+    @AfterAll
+    public static void restoreStreams() {
+        System.setOut(originalOut);
+    }
 
     @Test
     void getAccountNo() {
@@ -22,14 +40,44 @@ class AccountTest {
 
     @Test
     void depositPossible() {
-        assertEquals(false, testAcc.depositPossible(55000));
-        assertEquals(false, testAcc.depositPossible(499.99));
-        assertEquals(true, testAcc.depositPossible(2001.00));
+        try {
+            testAcc.depositPossible(55000);
+            fail();
+        } catch (Exception ex) {
+            assertTrue(ex.getMessage().contains("more than the maximum value"));
+        }
+
+        try {
+            testAcc.depositPossible(499.99);
+            fail();
+        } catch (Exception ex) {
+            assertTrue(ex.getMessage().contains("less than the minimum value"));
+        }
+
+        try {
+            assertTrue(testAcc.depositPossible(2001.00));
+        } catch (Exception ex) {
+            fail();
+        }
+
         testAcc.deposit(49000);
         testAcc.deposit(49000);
-        assertEquals(false, testAcc.depositPossible(2001.00));
+
+        try {
+            testAcc.depositPossible(2001.00);
+            fail();
+        } catch (Exception ex) {
+            assertTrue(ex.getMessage().contains("balance exceed the limit"));
+        }
+
         testAcc.deposit(1000);
-        assertEquals(false, testAcc.depositPossible(1000.00));
+
+        try {
+            testAcc.depositPossible(700.00);
+            fail();
+        } catch (Exception ex) {
+            assertTrue(ex.getMessage().contains("performed 3 deposit"));
+        }
     }
 
     @Test
@@ -46,14 +94,43 @@ class AccountTest {
     @Test
     void withdrawPossible() {
         testAcc.deposit(20000);
-        assertEquals(false, testAcc.withdrawPossible(55000));
-        assertEquals(false, testAcc.withdrawPossible(999.00));
-        assertEquals(true, testAcc.withdrawPossible(2001.00));
-        assertEquals(false, testAcc.withdrawPossible(20001.00));
+        try {
+            testAcc.withdrawPossible(55000);
+            fail();
+        } catch (Exception ex) {
+            assertTrue(ex.getMessage().contains("more than the maximum value"));
+        }
+
+        try {
+            testAcc.withdrawPossible(999.00);
+            fail();
+        } catch (Exception ex) {
+            assertTrue(ex.getMessage().contains("less than the minimum value"));
+        }
+
+        try {
+            assertTrue(testAcc.withdrawPossible(2001.00));
+        } catch (Exception ex) {
+            fail();
+        }
+
+        try {
+            testAcc.withdrawPossible(20001.00);
+            fail();
+        } catch (Exception ex) {
+            assertTrue(ex.getMessage().contains("reduce the balance to beyond minimum value"));
+        }
+
         testAcc.withdraw(2000);
         testAcc.withdraw(2000);
         testAcc.withdraw(2000);
-        assertEquals(false, testAcc.withdrawPossible(2000.00));
+
+        try {
+            testAcc.withdrawPossible(2000.00);
+            fail();
+        } catch (Exception ex) {
+            assertTrue(ex.getMessage().contains("performed 3 withdrawal"));
+        }
     }
 
     @Test

@@ -34,7 +34,7 @@ public class AccountManager {
             Account userAcc = findByID(accID);
             if(userAcc == null) return;
             double updatedBalance = userAcc.deposit(amount);
-            System.out.println(String.format("Account Number %d has balance %s %.2f\n", accID, currency, updatedBalance));
+            printBalanceMsg(accID, currency, updatedBalance);
             return;
         }
         catch (Exception e){
@@ -48,7 +48,7 @@ public class AccountManager {
             Account userAcc = findByID(accID);
             if(userAcc == null) return;
             double updatedBalance = userAcc.withdraw(amount);
-            System.out.println(String.format("Account Number %d has balance %s %.2f\n", accID, currency, updatedBalance));
+            printBalanceMsg(accID, currency, updatedBalance);
             return;
         }
         catch (Exception e){
@@ -62,7 +62,7 @@ public class AccountManager {
             Account userAcc = findByID(accID);
             if(userAcc == null) return;
             double updatedBalance = userAcc.getBalance();
-            System.out.println(String.format("Account Number %d has balance %s %.2f\n", accID,  currency, updatedBalance));
+            printBalanceMsg(accID,  currency, updatedBalance);
             return;
         }
         catch (Exception e){
@@ -112,5 +112,9 @@ public class AccountManager {
     private String newAccountMsg(String name, long accID) {
         String msg = "Account Created Successfully! \n" + "Account Number : " + String.valueOf(accID) + "\nAccount Holder : " + name + "\n";
         return msg;
+    }
+
+    private void printBalanceMsg(long accID, String currency, double updatedBalance) {
+        System.out.println(String.format("Account Number %d has balance %s %.2f\n", accID, currency, updatedBalance));
     }
 }
