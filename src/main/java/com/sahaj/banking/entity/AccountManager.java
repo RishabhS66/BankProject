@@ -17,11 +17,13 @@ public class AccountManager {
             Account newAcc = new Account(name, countOfAccounts++);
             long accID = newAcc.getAccountNo();
             if(accID > maxAccounts) {
-                System.out.println("Sorry, the Bank has reached it's capacity of Account Holders. New account was not created.\n");
-                return;
+                throw new RuntimeException("Sorry, the Bank has reached it's capacity of Account Holders. New account was not created.\n");
             }
             accList.put(accID, newAcc);
             System.out.println(newAccountMsg(name, accID));
+        }
+        catch (RuntimeException rex) {
+            System.out.println(rex.getMessage());
         }
         catch (Exception e){
             System.out.println("Error! Sorry, new account was not created.\n");
@@ -99,12 +101,12 @@ public class AccountManager {
         try {
             Account userAcc = accList.get(accID);
             if(userAcc == null) {
-                System.out.println(String.format("Error! Sorry, the given Account Number %d does not exist!. \n", accID));
+                throw new NullPointerException(String.format("Error! Sorry, the given Account Number %d does not exist!. \n", accID));
             }
             return userAcc;
         }
-        catch (Exception e) {
-            System.out.println(String.format("Error! Sorry, the given Account Number %d does not exist!. \n", accID));
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
         }
         return null;
     }
