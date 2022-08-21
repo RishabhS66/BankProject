@@ -1,5 +1,6 @@
-# Banking Project
+# Bank Project
 
+This is a Maven project to simulate some basic features of a bank, like account creation, money deposit and withdrawal and transferring of money between 2 accounts.  
 To run the project, please follow the steps mentioned below -
 
 1. Using MAVEN : <br>
